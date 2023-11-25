@@ -1,5 +1,7 @@
 <?php
 
+use App\Actions\Auth\Login;
+use App\Actions\Auth\Me;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('/login', Login::class)->name('auth.login');
+    Route::get('/me', Me::class)->name('auth.me')->middleware('auth');
 });
